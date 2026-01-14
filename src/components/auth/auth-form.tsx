@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { valibotValidator } from '@tanstack/valibot-form-adapter'
 import { ArrowLeft, Loader2, Lock, Mail, User } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -24,7 +23,6 @@ export function AuthForm() {
 	// Login form
 	const loginForm = useForm({
 		defaultValues: { email: '', password: '' },
-		validatorAdapter: valibotValidator(),
 		validators: { onChange: loginSchema },
 		onSubmit: async ({ value }) => {
 			clearError()
@@ -36,7 +34,6 @@ export function AuthForm() {
 	// Register form
 	const registerForm = useForm({
 		defaultValues: { name: '', email: '', password: '', passwordConfirm: '' },
-		validatorAdapter: valibotValidator(),
 		validators: { onChange: registerSchemaWithMatch },
 		onSubmit: async ({ value }) => {
 			clearError()
@@ -53,7 +50,6 @@ export function AuthForm() {
 	// Forgot password form
 	const forgotForm = useForm({
 		defaultValues: { email: '' },
-		validatorAdapter: valibotValidator(),
 		validators: { onChange: forgotPasswordSchema },
 		onSubmit: async ({ value }) => {
 			clearError()

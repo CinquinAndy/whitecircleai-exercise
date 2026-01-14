@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { valibotValidator } from '@tanstack/valibot-form-adapter'
 import { Loader2, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -18,7 +17,6 @@ export function SignInForm() {
 
 	const form = useForm({
 		defaultValues: { email: '', password: '' },
-		validatorAdapter: valibotValidator(),
 		validators: { onChange: loginSchema },
 		onSubmit: async ({ value }) => {
 			clearError()
