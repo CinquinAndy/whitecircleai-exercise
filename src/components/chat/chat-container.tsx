@@ -1,6 +1,5 @@
 'use client'
 
-
 import { useEffect, useRef, useState } from 'react'
 import { getAuthToken } from '@/services/pocketbase.client'
 import { useAuthStore } from '@/stores/auth.store'
@@ -218,9 +217,7 @@ export function ChatContainer() {
 							)}
 							{error && (
 								<div className="flex justify-center mb-4">
-									<div className="bg-destructive/10 text-destructive rounded-lg px-4 py-2 text-sm">
-										Error: {error}
-									</div>
+									<div className="bg-destructive/10 text-destructive rounded-lg px-4 py-2 text-sm">Error: {error}</div>
 								</div>
 							)}
 							<div ref={messagesEndRef} />

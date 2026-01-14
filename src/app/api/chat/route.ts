@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 	try {
 		// 1. Validate authentication using PocketBase directly
 		const authHeader = req.headers.get('Authorization')
-			if (!authHeader) {
+		if (!authHeader) {
 			return new Response(JSON.stringify({ error: 'Unauthenticated' }), {
 				status: 401,
 				headers: { 'Content-Type': 'application/json' },
@@ -92,11 +92,7 @@ export async function POST(req: Request) {
 		// 5. Save user message to PocketBase
 		// We await here to get the conversation ID if it's a new conversation
 		// This is important so the assistant message is saved to the same conversation
-		const { conversationId: currentConversationId } = await saveMessage(
-			user.id,
-			lastMessage,
-			conversationId
-		)
+		const { conversationId: currentConversationId } = await saveMessage(user.id, lastMessage, conversationId)
 
 		// 6. Prepare messages for LLM
 		const sanitizedMessages = messages.map((m: { role: string; content: string }, index: number) => ({
@@ -113,11 +109,7 @@ Be friendly in your responses while remaining professional.
 If you don't know the answer to a question, say so honestly.`,
 			onFinish: async ({ text }) => {
 				// Save assistant response to PocketBase
-				await saveMessage(
-					user.id,
-					{ role: 'assistant', content: text },
-					currentConversationId
-				)
+				await saveMessage(user.id, { role: 'assistant', content: text }, currentConversationId)
 			},
 		})
 

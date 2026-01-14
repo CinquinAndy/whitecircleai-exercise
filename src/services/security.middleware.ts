@@ -33,10 +33,7 @@ export interface SecurityContext {
  * - Prompt injection detection
  * - Rate limiting per user
  */
-export async function validateInput(
-	content: string,
-	_context: SecurityContext
-): Promise<ValidationResult> {
+export async function validateInput(content: string, _context: SecurityContext): Promise<ValidationResult> {
 	// Basic sanitization - remove potential prompt injection patterns
 	// This is a placeholder - real implementation would use a specialized LLM
 	const sanitizedContent = content.trim()
@@ -64,10 +61,7 @@ export async function validateInput(
  * - Safety verification
  * - Response formatting validation
  */
-export async function validateOutput(
-	content: string,
-	_context: SecurityContext
-): Promise<ValidationResult> {
+export async function validateOutput(content: string, _context: SecurityContext): Promise<ValidationResult> {
 	// Placeholder - real implementation would validate response
 	return {
 		isValid: true,

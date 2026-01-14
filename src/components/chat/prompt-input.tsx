@@ -82,9 +82,9 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 		setValue(e.target.value)
 	}
 
-	const handlePlusClick = () => {
-		fileInputRef.current?.click()
-	}
+	// const handlePlusClick = () => {
+	// 	fileInputRef.current?.click()
+	// }
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0]
