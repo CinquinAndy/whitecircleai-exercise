@@ -1,3 +1,4 @@
+import { AnimatedMarkdown } from 'flowtoken'
 import { cn } from '@/lib/utils'
 
 interface ChatMessage {
@@ -21,7 +22,18 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 					isUser ? 'bg-primary text-primary-foreground' : 'bg-muted dark:bg-[#303030]'
 				)}
 			>
-				<p className="text-sm whitespace-pre-wrap">{message.content}</p>
+				{isUser ? (
+					<p className="text-sm whitespace-pre-wrap">{message.content}</p>
+				) : (
+					<div className="text-sm whitespace-pre-wrap">
+						<AnimatedMarkdown
+							content={message.content}
+							animation="blurAndSharpen"
+							animationTimingFunction="ease-in-out"
+							animationDuration="0.6s"
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	)

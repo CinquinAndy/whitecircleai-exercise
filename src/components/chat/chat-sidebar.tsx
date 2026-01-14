@@ -1,8 +1,9 @@
 'use client'
 
-import { ChevronLeft, MessageSquare, MoreHorizontal, Plus, Search, Settings, User } from 'lucide-react'
-import { useState } from 'react'
+import { ChevronLeft, MessageSquare, MoreHorizontal, Plus, Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { getAuthToken } from '@/services/pocketbase.client'
 
 interface ChatHistoryItem {
 	id: string
@@ -10,16 +11,6 @@ interface ChatHistoryItem {
 	date: string
 	preview?: string
 }
-
-// Mock data for UI scaffold
-const mockChatHistory: ChatHistoryItem[] = [
-	{ id: '1', title: 'Comment créer une API REST', date: "Aujourd'hui", preview: 'Aide-moi à créer une API...' },
-	{ id: '2', title: 'Optimisation React', date: "Aujourd'hui", preview: 'Je veux optimiser mon...' },
-	{ id: '3', title: 'Questions TypeScript', date: 'Hier', preview: 'Comment utiliser les generics...' },
-	{ id: '4', title: 'Design System', date: 'Hier', preview: 'Je voudrais créer un design...' },
-	{ id: '5', title: 'Docker et containerisation', date: '7 derniers jours', preview: 'Explique-moi Docker...' },
-	{ id: '6', title: 'Architecture microservices', date: '7 derniers jours', preview: 'Quels sont les avantages...' },
-]
 
 interface ChatSidebarProps {
 	isOpen: boolean
@@ -37,9 +28,76 @@ export function ChatSidebar({
 	onSelectConversation,
 }: ChatSidebarProps) {
 	const [searchQuery, setSearchQuery] = useState('')
+	const [chatHistory, setChatHistory] = useState<ChatHistoryItem[]>([])
+	const [isLoading, setIsLoading] = useState(false)
+
+	const fetchHistory = async () => {
+		setIsLoading(true)
+		try {
+			const token = getAuthToken()
+			if (!token) return
+
+			const response = await fetch('/api/chat/history', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+
+			if (response.ok) {
+				const data = await response.json()
+				const conversations = data.conversations || []
+
+				const formattedHistory: ChatHistoryItem[] = conversations.map((conv: any) => {
+					// Determine date group
+					const date = new Date(conv.updated)
+					const now = new Date()
+					const diffTime = Math.abs(now.getTime() - date.getTime())
+					const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+					let dateLabel = 'Older'
+					if (diffDays <= 1) dateLabel = 'Today'
+					else if (diffDays <= 2) dateLabel = 'Yesterday'
+					else if (diffDays <= 7) dateLabel = 'Last 7 days'
+
+					// Basic preview from messages if available (or description if implemented)
+					// Current schema stores messages in JSON, let's assume we can get a snippet
+					// If fetching list, we might not get full messages unless expanded.
+					// Assuming the API returns conversation record which has 'messages' json array.
+					let preview = ''
+					if (conv.messages && Array.isArray(conv.messages) && conv.messages.length > 0) {
+						const lastMsg = conv.messages[conv.messages.length - 1]
+						preview = lastMsg.content ? lastMsg.content.substring(0, 40) + '...' : ''
+					}
+
+					return {
+						id: conv.id,
+						title: conv.title || 'New conversation',
+						date: dateLabel,
+						preview,
+					}
+				})
+				setChatHistory(formattedHistory)
+			}
+		} catch (error) {
+			console.error('Failed to fetch chat history', error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	useEffect(() => {
+		if (isOpen) {
+			fetchHistory()
+		}
+	}, [isOpen, activeConversationId]) // Refetch when opening or changing conversation (to update order/last msg)
+
+	// Filter based on search query
+	const filteredHistory = chatHistory.filter((chat) =>
+		chat.title.toLowerCase().includes(searchQuery.toLowerCase())
+	)
 
 	// Group conversations by date
-	const groupedHistory = mockChatHistory.reduce(
+	const groupedHistory = filteredHistory.reduce(
 		(acc, chat) => {
 			if (!acc[chat.date]) {
 				acc[chat.date] = []
@@ -75,7 +133,7 @@ export function ChatSidebar({
 						className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-sm font-medium"
 					>
 						<Plus className="h-4 w-4" />
-						Nouveau chat
+						New chat
 					</button>
 				</div>
 
@@ -85,7 +143,7 @@ export function ChatSidebar({
 						<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 						<input
 							type="text"
-							placeholder="Rechercher..."
+							placeholder="Search..."
 							value={searchQuery}
 							onChange={e => setSearchQuery(e.target.value)}
 							className="w-full pl-10 pr-4 py-2 rounded-lg bg-background dark:bg-[#2a2a2a] text-sm text-foreground placeholder:text-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-ring"
@@ -129,18 +187,18 @@ export function ChatSidebar({
 				</div>
 
 				{/* Footer */}
-				<div className="p-3 border-t border-border">
+				{/* todo: implement user profile + settings and disconnected things */}
+				{/* <div className="p-3 border-t border-border">
 					<div className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent dark:hover:bg-[#2a2a2a] transition-colors cursor-pointer">
 						<div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
 							<User className="h-4 w-4 text-white" />
 						</div>
 						<div className="flex-1 min-w-0">
 							<p className="text-sm font-medium text-foreground truncate">Utilisateur</p>
-							<p className="text-xs text-muted-foreground">Plan Pro</p>
 						</div>
 						<Settings className="h-4 w-4 text-muted-foreground" />
 					</div>
-				</div>
+				</div> */}
 			</aside>
 
 			{/* Toggle button when sidebar is closed */}
