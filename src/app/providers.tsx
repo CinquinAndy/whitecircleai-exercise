@@ -1,14 +1,8 @@
 'use client'
 
-import { type ReactNode, useEffect } from 'react'
-import { useAuthStore } from '@/stores/auth.store'
+import type { ReactNode } from 'react'
+import { AuthGuard } from '@/components/auth/auth-guard'
 
 export function Providers({ children }: { children: ReactNode }) {
-	const initialize = useAuthStore(state => state.initialize)
-
-	useEffect(() => {
-		initialize()
-	}, [initialize])
-
-	return <>{children}</>
+	return <AuthGuard>{children}</AuthGuard>
 }
