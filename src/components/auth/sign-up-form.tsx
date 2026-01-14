@@ -72,7 +72,7 @@ export function SignUpForm() {
 											value={field.state.value}
 											onChange={e => field.handleChange(e.target.value)}
 											onBlur={field.handleBlur}
-											placeholder="Votre nom"
+											placeholder="Your name"
 											className={cn(
 												'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 												field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'
@@ -98,7 +98,7 @@ export function SignUpForm() {
 											value={field.state.value}
 											onChange={e => field.handleChange(e.target.value)}
 											onBlur={field.handleBlur}
-											placeholder="votre@email.com"
+											placeholder="your@email.com"
 											className={cn(
 												'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 												field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'

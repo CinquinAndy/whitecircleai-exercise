@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthStore>()(
 					const record = await pbLogin(credentials)
 					set({ user: record, isLoading: false })
 				} catch (err) {
-					const message = err instanceof Error ? err.message : 'Échec de la connexion'
+					const message = err instanceof Error ? err.message : 'Login failed'
 					set({ error: message, isLoading: false })
 					throw err
 				}
@@ -57,7 +57,7 @@ export const useAuthStore = create<AuthStore>()(
 					const record = await pbRegister(data)
 					set({ user: record, isLoading: false })
 				} catch (err) {
-					const message = err instanceof Error ? err.message : "Échec de l'inscription"
+					const message = err instanceof Error ? err.message : 'Registration failed'
 					set({ error: message, isLoading: false })
 					throw err
 				}

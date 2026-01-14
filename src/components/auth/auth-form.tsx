@@ -55,7 +55,7 @@ export function AuthForm() {
 			clearError()
 			try {
 				await requestPasswordReset(value.email)
-				setSuccess('Un email de réinitialisation a été envoyé')
+				setSuccess('A reset email has been sent')
 			} catch {
 				// Error handled by store
 			}
@@ -81,9 +81,9 @@ export function AuthForm() {
 					</div>
 					<h1 className="text-2xl font-bold text-foreground">WhiteCircle AI</h1>
 					<p className="text-sm text-muted-foreground mt-1">
-						{mode === 'login' && 'Connectez-vous pour continuer'}
-						{mode === 'register' && 'Créez votre compte'}
-						{mode === 'forgot-password' && 'Réinitialisez votre mot de passe'}
+						{mode === 'login' && 'Sign in to continue'}
+						{mode === 'register' && 'Create your account'}
+						{mode === 'forgot-password' && 'Reset your password'}
 					</p>
 				</div>
 
@@ -97,7 +97,7 @@ export function AuthForm() {
 							className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
 						>
 							<ArrowLeft className="h-4 w-4" />
-							Retour
+							Back
 						</button>
 					)}
 
@@ -139,7 +139,7 @@ export function AuthForm() {
 												value={field.state.value}
 												onChange={e => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder="votre@email.com"
+												placeholder="your@email.com"
 												className={cn(
 													'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 													field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'
@@ -155,7 +155,7 @@ export function AuthForm() {
 								{field => (
 									<div>
 										<label htmlFor="login-password" className="block text-sm font-medium text-foreground mb-1.5">
-											Mot de passe
+											Password
 										</label>
 										<div className="relative">
 											<Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -183,7 +183,7 @@ export function AuthForm() {
 									onClick={() => switchMode('forgot-password')}
 									className="text-sm text-primary hover:underline"
 								>
-									Mot de passe oublié ?
+									Forgot password?
 								</button>
 							</div>
 
@@ -193,7 +193,7 @@ export function AuthForm() {
 								className="w-full py-2.5 px-4 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 							>
 								{isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-								Se connecter
+								Sign in
 							</button>
 						</form>
 					)}
@@ -212,7 +212,7 @@ export function AuthForm() {
 								{field => (
 									<div>
 										<label htmlFor="register-name" className="block text-sm font-medium text-foreground mb-1.5">
-											Nom
+											Name
 										</label>
 										<div className="relative">
 											<User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -222,7 +222,7 @@ export function AuthForm() {
 												value={field.state.value}
 												onChange={e => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder="Votre nom"
+												placeholder="Your name"
 												className={cn(
 													'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 													field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'
@@ -248,7 +248,7 @@ export function AuthForm() {
 												value={field.state.value}
 												onChange={e => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder="votre@email.com"
+												placeholder="your@email.com"
 												className={cn(
 													'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 													field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'
@@ -264,7 +264,7 @@ export function AuthForm() {
 								{field => (
 									<div>
 										<label htmlFor="register-password" className="block text-sm font-medium text-foreground mb-1.5">
-											Mot de passe
+											Password
 										</label>
 										<div className="relative">
 											<Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -293,7 +293,7 @@ export function AuthForm() {
 											htmlFor="register-password-confirm"
 											className="block text-sm font-medium text-foreground mb-1.5"
 										>
-											Confirmer le mot de passe
+											Confirm password
 										</label>
 										<div className="relative">
 											<Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -321,7 +321,7 @@ export function AuthForm() {
 								className="w-full py-2.5 px-4 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 							>
 								{isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-								Créer mon compte
+								Create account
 							</button>
 						</form>
 					)}
@@ -350,7 +350,7 @@ export function AuthForm() {
 												value={field.state.value}
 												onChange={e => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder="votre@email.com"
+												placeholder="your@email.com"
 												className={cn(
 													'w-full pl-10 pr-4 py-2.5 rounded-xl bg-background dark:bg-[#2a2a2a] border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all',
 													field.state.meta.errors.length > 0 ? 'border-destructive' : 'border-border'
@@ -368,7 +368,7 @@ export function AuthForm() {
 								className="w-full py-2.5 px-4 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 							>
 								{isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-								Envoyer le lien
+								Send reset link
 							</button>
 						</form>
 					)}
@@ -378,24 +378,24 @@ export function AuthForm() {
 						<div className="mt-6 pt-6 border-t border-border text-center text-sm">
 							{mode === 'login' ? (
 								<p className="text-muted-foreground">
-									Pas encore de compte ?{' '}
+									Don't have an account?{' '}
 									<button
 										type="button"
 										onClick={() => switchMode('register')}
 										className="text-primary hover:underline font-medium"
 									>
-										S'inscrire
+										Sign up
 									</button>
 								</p>
 							) : (
 								<p className="text-muted-foreground">
-									Déjà un compte ?{' '}
+									Already have an account?{' '}
 									<button
 										type="button"
 										onClick={() => switchMode('login')}
 										className="text-primary hover:underline font-medium"
 									>
-										Se connecter
+										Sign in
 									</button>
 								</p>
 							)}

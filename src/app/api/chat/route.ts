@@ -122,7 +122,7 @@ If you don't know the answer to a question, say so honestly.`,
 		})
 
 		// 8. Return streaming response with conversation ID header
-		return result.toDataStreamResponse({
+		return result.toTextStreamResponse({
 			headers: {
 				'X-Conversation-Id': currentConversationId,
 			},

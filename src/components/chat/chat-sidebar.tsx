@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronLeft, MessageSquare, MoreHorizontal, Plus, Search } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { getAuthToken } from '@/services/pocketbase.client'
@@ -29,10 +30,8 @@ export function ChatSidebar({
 }: ChatSidebarProps) {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [chatHistory, setChatHistory] = useState<ChatHistoryItem[]>([])
-	const [isLoading, setIsLoading] = useState(false)
 
 	const fetchHistory = async () => {
-		setIsLoading(true)
 		try {
 			const token = getAuthToken()
 			if (!token) return
@@ -66,7 +65,7 @@ export function ChatSidebar({
 					let preview = ''
 					if (conv.messages && Array.isArray(conv.messages) && conv.messages.length > 0) {
 						const lastMsg = conv.messages[conv.messages.length - 1]
-						preview = lastMsg.content ? lastMsg.content.substring(0, 40) + '...' : ''
+						preview = lastMsg.content ? `${lastMsg.content.substring(0, 40)}...` : ''
 					}
 
 					return {
@@ -80,8 +79,6 @@ export function ChatSidebar({
 			}
 		} catch (error) {
 			console.error('Failed to fetch chat history', error)
-		} finally {
-			setIsLoading(false)
 		}
 	}
 
@@ -92,9 +89,7 @@ export function ChatSidebar({
 	}, [isOpen, activeConversationId]) // Refetch when opening or changing conversation (to update order/last msg)
 
 	// Filter based on search query
-	const filteredHistory = chatHistory.filter((chat) =>
-		chat.title.toLowerCase().includes(searchQuery.toLowerCase())
-	)
+	const filteredHistory = chatHistory.filter(chat => chat.title.toLowerCase().includes(searchQuery.toLowerCase()))
 
 	// Group conversations by date
 	const groupedHistory = filteredHistory.reduce(
@@ -171,13 +166,14 @@ export function ChatSidebar({
 										>
 											<MessageSquare className="h-4 w-4 text-muted-foreground shrink-0" />
 											<span className="flex-1 truncate text-sm text-foreground">{chat.title}</span>
-											<button
-												type="button"
+											{/* todo: add delete possibility on conversation */}
+											{/* <Link
+											href={""}
 												className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-background dark:hover:bg-[#3a3a3a] transition-all"
 												aria-label="More options"
 											>
 												<MoreHorizontal className="h-4 w-4 text-muted-foreground" />
-											</button>
+											</Link> */}
 										</button>
 									</li>
 								))}
@@ -194,7 +190,7 @@ export function ChatSidebar({
 							<User className="h-4 w-4 text-white" />
 						</div>
 						<div className="flex-1 min-w-0">
-							<p className="text-sm font-medium text-foreground truncate">Utilisateur</p>
+							<p className="text-sm font-medium text-foreground truncate">User</p>
 						</div>
 						<Settings className="h-4 w-4 text-muted-foreground" />
 					</div>

@@ -178,7 +178,7 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 			<div className="mt-0.5 p-1 pt-0">
 				<TooltipProvider delayDuration={100}>
 					<div className="flex items-center gap-2">
-						<Tooltip>
+						{/* <Tooltip>
 							<TooltipTrigger asChild>
 								<button
 									type="button"
@@ -192,10 +192,10 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 							<TooltipContent side="top" showArrow>
 								<p>Attach image</p>
 							</TooltipContent>
-						</Tooltip>
+						</Tooltip> */}
 
 						<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-							<Tooltip>
+							{/* <Tooltip>
 								<TooltipTrigger asChild>
 									<PopoverTrigger asChild>
 										<button
@@ -210,7 +210,7 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 								<TooltipContent side="top" showArrow>
 									<p>Explore Tools</p>
 								</TooltipContent>
-							</Tooltip>
+							</Tooltip> */}
 							<PopoverContent side="top" align="start">
 								<div className="flex flex-col gap-1">
 									{toolsList.map(tool => (
@@ -250,7 +250,7 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 						)}
 
 						<div className="ml-auto flex items-center gap-2">
-							<Tooltip>
+							{/* <Tooltip>
 								<TooltipTrigger asChild>
 									<button
 										type="button"
@@ -263,7 +263,7 @@ export function PromptInput({ onSubmit, isLoading = false, placeholder = 'Messag
 								<TooltipContent side="top" showArrow>
 									<p>Record voice</p>
 								</TooltipContent>
-							</Tooltip>
+							</Tooltip> */}
 
 							<Tooltip>
 								<TooltipTrigger asChild>
